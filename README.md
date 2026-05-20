@@ -1,16 +1,31 @@
-# Kode Generator
+# 🔑 Kode Generator
 
-Et simpelt Python program der laver random koder med forskellige sværhedsgrader.
+Et simpelt Python-program med grafisk brugerflade til at generere sikre koder/adgangskoder.
 
-## Funktioner
-- Vælg mellem let, medium og svær
-- Genererer random kode med et klik
-- Lille GUI lavet med Tkinter
+## Krav
+
+- Python 3.x
+- `tkinter` (følger med Python som standard)
 
 ## Sådan kører du det
-Kør programmet med python3
 
-## Sværhedsgrader
-- Let: kun små bogstaver, kort kode
-- Medium: bogstaver og tal
-- Svær: bogstaver, tal og specialtegn
+```bash
+python3 kode_generator.py
+```
+
+## Funktioner
+
+- **Justerbar længde** — vælg mellem 4 og 64 tegn med en slider
+- **Specialtegn** — valgfrit inkluder tegn som `!@#$%^&*`
+- **Ekskluder tvetydige tegn** — fjerner tegn som `0`, `O`, `1`, `l`, `I` der er svære at skelne
+- **Styrke-indikator** — viser om koden er Svag 🔴, Okay 🟡 eller Stærk 🟢
+- **Kopierer automatisk** — koden kopieres til udklipsholderen ved generering
+- **Historik** — gemmer de sidste 5 genererede koder med tidsstempel
+- **Export** — gem historikken til `historik.txt`
+
+## Filer
+
+| Fil | Beskrivelse |
+|-----|-------------|
+| `kode_generator.py` | Hovedprogrammet |
+| `historik.txt` | Oprettes automatisk når du eksporterer historik |
