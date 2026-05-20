@@ -1,11 +1,11 @@
 # 🔑 Kode Generator
 
-Et simpelt Python-program med grafisk brugerflade til at generere sikre koder/adgangskoder.
+Et simpelt Python-program med GUI til at generere koder.
 
 ## Krav
 
 - Python 3.x
-- `tkinter` (følger med Python som standard)
+- `tkinter` 
 
 ## Sådan kører du det
 
@@ -15,7 +15,7 @@ python3 kode_generator.py
 
 ## Funktioner
 
-- **Justerbar længde** — vælg mellem 4 og 64 tegn med en slider
+- **Justerbar længde** - vælg mellem 4 og 64 tegn med en slider
 - **Specialtegn** — valgfrit inkluder tegn som `!@#$%^&*`
 - **Ekskluder tvetydige tegn** — fjerner tegn som `0`, `O`, `1`, `l`, `I` der er svære at skelne
 - **Styrke-indikator** — viser om koden er Svag 🔴, Okay 🟡 eller Stærk 🟢
