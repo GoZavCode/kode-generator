@@ -8,31 +8,31 @@ dark_mode = False
 def opdater_ui_farver():
     bg = "#1e1e1e" if dark_mode else "white"
     fg = "white" if dark_mode else "black"
-    btn_bg = "#333333" if dark_mode else "SystemButtonFace"
+    entry_bg = "#2b2b2b" if dark_mode else "white"
+    btn_bg = "#333333" if dark_mode else "white"
 
     vindue.config(bg=bg)
 
     for w in vindue.winfo_children():
         try:
             if isinstance(w, tk.Button):
-                w.config(bg=btn_bg, fg=fg, activebackground=btn_bg, activeforeground=fg)
+                w.config(
+                    bg=btn_bg,
+                    fg=fg,
+                    activebackground=btn_bg,
+                    activeforeground=fg,
+                    relief="flat"
+                )
             elif isinstance(w, tk.Label):
                 w.config(bg=bg, fg=fg)
             elif isinstance(w, tk.Checkbutton):
                 w.config(bg=bg, fg=fg, selectcolor=bg, activebackground=bg)
-            elif isinstance(w, tk.Radiobutton):
-                w.config(bg=bg, fg=fg, selectcolor=bg, activebackground=bg)
             elif isinstance(w, tk.Scale):
                 w.config(bg=bg, fg=fg, troughcolor=bg)
             elif isinstance(w, tk.Entry):
-                w.config(bg="white" if not dark_mode else "#2b2b2b", fg=fg, insertbackground=fg)
+                w.config(bg=entry_bg, fg=fg, insertbackground=fg)
         except:
             pass
-
-def toggle_dark():
-    global dark_mode
-    dark_mode = not dark_mode
-    opdater_ui_farver()
 
 def vurder_styrke(kode):
     score = 0
@@ -95,8 +95,6 @@ resultat.pack()
 
 styrke_label = tk.Label(vindue, text="Styrke: -")
 styrke_label.pack()
-
-tk.Button(vindue, text="Dark mode", command=toggle_dark).pack(pady=5)
 
 tk.Label(vindue, text="Historik (sidste 5)").pack()
 historik_label = tk.Label(vindue, text="")
