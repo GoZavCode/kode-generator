@@ -16,7 +16,13 @@ def generer_kode():
         længde = 14
 
     kode = "".join(random.choice(tegn) for _ in range(længde))
-    resultat.config(text=kode)
+
+    resultat.delete(0, tk.END)
+    resultat.insert(0, kode)
+
+def kopiér():
+    vindue.clipboard_clear()
+    vindue.clipboard_append(resultat.get())
 
 vindue = tk.Tk()
 vindue.title("Kode generator")
@@ -32,7 +38,9 @@ tk.Radiobutton(vindue, text="Svær", variable=valg, value="svær").pack()
 
 tk.Button(vindue, text="Generer kode", command=generer_kode).pack(pady=10)
 
-resultat = tk.Label(vindue, text="", font=("Arial", 16))
+resultat = tk.Entry(vindue, font=("Arial", 16), justify="center")
 resultat.pack()
+
+tk.Button(vindue, text="Kopiér", command=kopiér).pack(pady=5)
 
 vindue.mainloop()
