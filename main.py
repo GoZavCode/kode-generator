@@ -3,17 +3,29 @@ import string
 import tkinter as tk
 
 historik_liste = []
-
 dark_mode = False
 
 def opdater_ui_farver():
     bg = "#1e1e1e" if dark_mode else "white"
     fg = "white" if dark_mode else "black"
+    btn_bg = "#333333" if dark_mode else "SystemButtonFace"
 
     vindue.config(bg=bg)
+
     for w in vindue.winfo_children():
         try:
-            w.config(bg=bg, fg=fg)
+            if isinstance(w, tk.Button):
+                w.config(bg=btn_bg, fg=fg, activebackground=btn_bg, activeforeground=fg)
+            elif isinstance(w, tk.Label):
+                w.config(bg=bg, fg=fg)
+            elif isinstance(w, tk.Checkbutton):
+                w.config(bg=bg, fg=fg, selectcolor=bg, activebackground=bg)
+            elif isinstance(w, tk.Radiobutton):
+                w.config(bg=bg, fg=fg, selectcolor=bg, activebackground=bg)
+            elif isinstance(w, tk.Scale):
+                w.config(bg=bg, fg=fg, troughcolor=bg)
+            elif isinstance(w, tk.Entry):
+                w.config(bg="white" if not dark_mode else "#2b2b2b", fg=fg, insertbackground=fg)
         except:
             pass
 
@@ -68,6 +80,7 @@ vindue.title("Kode generator")
 vindue.geometry("360x450")
 
 tk.Label(vindue, text="Længde").pack()
+
 længde_slider = tk.Scale(vindue, from_=4, to=50, orient="horizontal")
 længde_slider.set(16)
 længde_slider.pack()
