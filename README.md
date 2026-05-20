@@ -15,7 +15,7 @@ python3 kode_generator.py
 
 ## Funktioner
 
-- **Justerbar længde** - vælg mellem 4 og 64 tegn med en slider
+- **Justerbar længde** - vælg mellem 4 og 64 tegn med slideren
 - **Specialtegn** — valgfrit inkluder tegn som `!@#$%^&*`
 - **Ekskluder tvetydige tegn** — fjerner tegn som `0`, `O`, `1`, `l`, `I` der er svære at skelne
 - **Styrke-indikator** — viser om koden er Svag 🔴, Okay 🟡 eller Stærk 🟢
