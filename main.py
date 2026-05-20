@@ -93,7 +93,7 @@ def knap(forælder, tekst, cmd, **kw):
                      bg=KNAP_BG, fg=KNAP_FG,
                      activebackground="#dddddd", activeforeground="#000000",
                      relief="flat", cursor="hand2",
-                     font=("Arial", 10, "bold"), **kw)
+                     font=kw.pop("font", ("Arial", 10, "bold")), **kw)
 
 # ── Titel ────────────────────────────────────────────
 lbl(vindue, "🔑  Kode Generator", font=("Arial", 16, "bold"), fg=ACCENT).pack(pady=(18, 4))
