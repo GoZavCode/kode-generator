@@ -2,52 +2,94 @@ import random
 import string
 import tkinter as tk
 
+historik_liste = []
+
+dark_mode = False
+
+def opdater_ui_farver():
+    bg = "#1e1e1e" if dark_mode else "white"
+    fg = "white" if dark_mode else "black"
+
+    vindue.config(bg=bg)
+    for w in vindue.winfo_children():
+        try:
+            w.config(bg=bg, fg=fg)
+        except:
+            pass
+
+def toggle_dark():
+    global dark_mode
+    dark_mode = not dark_mode
+    opdater_ui_farver()
+
+def vurder_styrke(kode):
+    score = 0
+    if any(c.islower() for c in kode): score += 1
+    if any(c.isupper() for c in kode): score += 1
+    if any(c.isdigit() for c in kode): score += 1
+    if any(c in string.punctuation for c in kode): score += 1
+
+    return "Svag" if score <= 1 else "Medium" if score == 2 else "Stærk"
+
 def generer_kode():
-    sværhedsgrad = valg.get()
+    længde = længde_slider.get()
 
-    try:
-        længde = int(længde_input.get())
-    except:
-        længde = 10
-
-    if sværhedsgrad == "let":
-        tegn = string.ascii_lowercase
-    elif sværhedsgrad == "medium":
-        tegn = string.ascii_letters + string.digits
-    else:
-        tegn = string.ascii_letters + string.digits + string.punctuation
+    tegn = string.ascii_letters + string.digits
+    if special_var.get():
+        tegn += string.punctuation
 
     kode = "".join(random.choice(tegn) for _ in range(længde))
 
     resultat.delete(0, tk.END)
     resultat.insert(0, kode)
 
-def kopiér():
     vindue.clipboard_clear()
-    vindue.clipboard_append(resultat.get())
+    vindue.clipboard_append(kode)
+
+    styrke_label.config(text=f"Styrke: {vurder_styrke(kode)}")
+
+    historik_liste.insert(0, kode)
+    if len(historik_liste) > 5:
+        historik_liste.pop()
+
+    historik_label.config(text="\n".join(historik_liste))
+
+def clear_historik():
+    historik_liste.clear()
+    historik_label.config(text="")
+
+def export_historik():
+    with open("historik.txt", "w") as f:
+        for k in historik_liste:
+            f.write(k + "\n")
 
 vindue = tk.Tk()
 vindue.title("Kode generator")
-vindue.geometry("320x250")
+vindue.geometry("360x450")
 
-valg = tk.StringVar(value="let")
+tk.Label(vindue, text="Længde").pack()
+længde_slider = tk.Scale(vindue, from_=4, to=50, orient="horizontal")
+længde_slider.set(16)
+længde_slider.pack()
 
-tk.Label(vindue, text="Vælg sværhedsgrad").pack()
-
-tk.Radiobutton(vindue, text="Let", variable=valg, value="let").pack()
-tk.Radiobutton(vindue, text="Medium", variable=valg, value="medium").pack()
-tk.Radiobutton(vindue, text="Svær", variable=valg, value="svær").pack()
-
-tk.Label(vindue, text="Antal karakterer").pack()
-længde_input = tk.Entry(vindue)
-længde_input.insert(0, "10")
-længde_input.pack()
+special_var = tk.BooleanVar()
+tk.Checkbutton(vindue, text="Inkluder specialtegn", variable=special_var).pack()
 
 tk.Button(vindue, text="Generer kode", command=generer_kode).pack(pady=10)
 
 resultat = tk.Entry(vindue, font=("Arial", 16), justify="center")
 resultat.pack()
 
-tk.Button(vindue, text="Kopiér", command=kopiér).pack(pady=5)
+styrke_label = tk.Label(vindue, text="Styrke: -")
+styrke_label.pack()
+
+tk.Button(vindue, text="Dark mode", command=toggle_dark).pack(pady=5)
+
+tk.Label(vindue, text="Historik (sidste 5)").pack()
+historik_label = tk.Label(vindue, text="")
+historik_label.pack()
+
+tk.Button(vindue, text="Ryd historik", command=clear_historik).pack(pady=5)
+tk.Button(vindue, text="Export historik", command=export_historik).pack(pady=5)
 
 vindue.mainloop()
